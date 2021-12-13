@@ -15,13 +15,11 @@
                                 <div class="sm:px-6 sm:w-1/2 sm:m-10 m-auto">
                                     <h2 class="text-3xl">{{ Auth::user()->name }}</h2>
                                     <hr/>
-                                    <h5>Question Attempted : <span>6</span></h5>
+                                    <h5>Question Attempted : <span id="qa">_</span></h5>
                                     <hr/>
-                                    <h5>Score : <span>6</span></h5>
+                                    <h5>Score : <span id="score">_</span></h5>
                                     <hr/>
-                                    <h5>Last Attempted : <span>6</span></h5>
-                                    <hr/>
-                                    <h5>Question Contrinuted : <span>6</span></h5>
+                                    <h5>Question Contributed : <span id="qc">_</span></h5>
                                 </div>
                             </div>
                         </div>
@@ -39,15 +37,16 @@ $(document).ready(() => {
 
                     $.ajax({
                         method: "GET",
-                        url:  '/user',
-
+                        url:  '/progress/{{ Auth::user()->id }}',
                     }).done(function( res ) {
-                        if(res == "ok"){
-                            var url = "/url/to/redirect";
-                        // setTimeout($(location).attr('href', url),3000);
+                        if(res){
+                            $('#qa').text(res.total);
+                            $('#score').text(res.score);
+                            $('#qc').text(res.question_contributed);
                         }
+
+                        })
                     })
-                })
     </script>
     @endsection
 </x-app-layout>

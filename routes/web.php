@@ -27,6 +27,11 @@ Route::get('/my-progress', function () {
 })->middleware(['auth'])->name('progress');
 
 
-Route::get('/user',[ProgressController::class, 'getMe']);
+
+Route::post('create_question', [App\Http\Controllers\QuestionController::class, 'store'])->name('create_question');
+Route::post('save_progress',[App\Http\Controllers\ProgressController::class,'store'])->name('save_progress');
+Route::get('progress/{user_id}',[App\Http\Controllers\ProgressController::class,'show'])->name('current_progress');
+Route::get('getQuestion',[App\Http\Controllers\QuestionController::class,'getQuestion'])->name('get_question');
+
 
 require __DIR__.'/auth.php';

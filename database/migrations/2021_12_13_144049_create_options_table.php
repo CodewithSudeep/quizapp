@@ -16,7 +16,7 @@ class CreateOptionsTable extends Migration
         Schema::create('options', function (Blueprint $table) {
             $table->id();
             $table->string('question_id');
-            $table->text('option');
+            $table->text('option_name');
             $table->timestamps();
         });
     }

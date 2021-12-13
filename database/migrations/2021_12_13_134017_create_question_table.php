@@ -17,6 +17,7 @@ class CreateQuestionTable extends Migration
             $table->id();
             $table->string('question_name');
             $table->string('correct_answer');
+            $table->string('added_by');
             $table->timestamps();
         });
     }

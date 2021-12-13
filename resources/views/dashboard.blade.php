@@ -5,16 +5,19 @@
                 <div class="p-6 bg-white border-b border-gray-200">
                     <form id="questionBank">
                         <div class="p-2 bg-gray" id="questionHeader" >
-                            <h3>1. Question Here</h3>
-                            <input type="hidden" name="question_id" value="2">
+                            <div class="text-center">
+                                <div class="loadingio-spinner-pulse-nb605kmnwcp"><div class="ldio-xewc9m53fj">
+                                    <div></div><div></div><div></div>
+                                    </div></div>
+                            </div>
                         </div>
                         <div id="optionHeader">
                         <div class="p-2">
-                          <input type="radio" name="question1" value="1" onchange="setAnswer(event)"> Answer <br>
+
                         </div>
                         </div>
-                          <div class="p-4 bg-white ">
-                            <button type="btn" id="answer" class="inline-flex items-center px-4 py-2 bg-gray-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 active:bg-gray-900 focus:outline-none focus:border-gray-900 focus:ring ring-gray-300 disabled:opacity-25 transition ease-in-out duration-150 ml-3">
+                          <div class="p-4 bg-white hidden" id="submitBtn" >
+                            <button type="btn" id="answer" class="inline-flex items-center px-4 py-2 bg-gray-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 active:bg-gray-900 focus:outline-none focus:border-gray-900 focus:ring ring-gray-300 disabled:opacity-25 transition ease-in-out duration-150 ml-3 animate__animated animate__slideInLeft">
                                 Submit
                             </button>
                           </div>
@@ -26,37 +29,66 @@
         </div>
     </div>
     @section('scripts')
-    <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
-    <script>
 
-let answer;
+    <script>
+$(document).ready(() => {
+$.ajax({
+    method: "GET",
+    url:  '/getQuestion',
+
+}).done(function( res ) {
+    if(res.status == "ok"){
+        makeQuestion(res.data);
+        $("#submitBtn").show();
+    }
+})
+})
+
+let answer,correct,currentQuestion;
 const setAnswer = (e) =>{
     answer = e.target.value;
 }
 
 const makeQuestion = (data) =>{
-    const { question, options, question_id } = data;
-    const question_html = `<h3>${question}</h3>
-                            <input type="hidden" name="question_id" value="${question_id}">`;
-    const options_html = options.map(option => `<div class="p-2"><input type="radio" name="question1" value="${option.id}" onchange="setAnswer(event)"> ${option.option} <br></div>`).join('');
+    if(!data){
+        $("#questionHeader").html("<h1 class='text-center text-2xl font-bold'>No Questions Found</h1>");
+        $("#submitBtn").style('display','none');
+        return;
+    }
+    const { question_name, options, id, correct_answer } = data;
+    correct = correct_answer;
+    currentQuestion = id;
+    const question_html = `<div class='animate__animated animate__slideInLeft'><h3>${id}. ${question_name}</h3>
+                            <input type="hidden" name="question_id" id="question_id" value="${id}"></div>`;
+    const options_html = options.map(option => `<div class="p-2 animate__animated animate__slideInLeft"><input type="radio" name="question1" value="${option.option_name}" onchange="setAnswer(event)"> ${option.option_name} <br></div>`).join('');
     $("#questionHeader").html(question_html);
     $("#optionHeader").html(options_html);
 }
 
 $("#questionBank").on('submit', (e) => {
                     e.preventDefault();
-                    const data = {
-                        questionId: $("#question_id").value,
-                        answer: answer
+                    let staus = "";
+                    console.log(answer,correct);
+                    if (answer == correct) {
+                        showToast("Correct Answer", "success");
+                        staus=1;
+                    } else {
+                        showToast("Wrong Answer", "error");
+                        staus=0;
                     }
+
+                    const data = {
+                        question_id: currentQuestion,
+                        status: staus
+                    }
+                    console.log(data);
                     $.ajax({
                         method: "POST",
-                        url:  '/your/url/to/post',
+                        url:  '/save_progress',
                         data: data,
                     }).done(function( res ) {
-                        if(res == "ok"){
-                            var url = "/url/to/redirect";
-                        // setTimeout($(location).attr('href', url),3000);
+                        if(res.message){
+                           makeQuestion(res.data);
                         }
                     })
                 })

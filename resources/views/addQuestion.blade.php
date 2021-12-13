@@ -3,6 +3,7 @@
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 bg-white border-b border-gray-200">
+
                     <form id="questionAdd">
                         <div class="p-2 bg-gray" >
                                     <h3 class="text-lg leading-6 font-medium text-gray-900">
@@ -32,9 +33,7 @@
         </div>
     </div>
     @section('scripts')
-    <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
-    <script>
-
+   <script>
 let question, options, correct;
 const setQuestion = (e) =>{
     question = e.target.value;
@@ -46,23 +45,23 @@ const setCorrectOption = (e) =>{
     correct = e.target.value;
 }
 
-
 $("#questionAdd").on('submit', (e) => {
                     e.preventDefault();
                     const data = {
                        question:question,
                        options:options,
-                       correct: correct
+                       correct: correct,
+                       added_by: {{Auth::user()->id}}
                     }
-                    console.log(data);
+
                     $.ajax({
                         method: "POST",
-                        url:  '/your/url/to/post',
+                        url:  '/create_question',
                         data: data,
-                    }).done(function( res ) {
-                        if(res == "ok"){
-                            var url = "/url/to/redirect";
-                        // setTimeout($(location).attr('href', url),3000);
+                    }).done(function(response) {
+                        if(response.status=='ok'){
+                            showToast("Question added successfully", "success");
+                            $("#questionAdd")[0].reset();
                         }
                     })
                 })
