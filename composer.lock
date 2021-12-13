@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "fac5c9a7b8342cf24df444a74789ee54",
+    "content-hash": "2701a36f08bbc3602d7418cdfe1addc6",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -2845,6 +2845,43 @@
                 }
             ],
             "time": "2021-09-25T23:10:38+00:00"
+        },
+        {
+            "name": "sudeep/formparse",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/sudeepmeesra/FormParse.git",
+                "reference": "02e7f22b5f17e98cea3633e7f3cf17d55dba3b4d"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/sudeepmeesra/FormParse/zipball/02e7f22b5f17e98cea3633e7f3cf17d55dba3b4d",
+                "reference": "02e7f22b5f17e98cea3633e7f3cf17d55dba3b4d",
+                "shasum": ""
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Sudeep\\FormParser\\": "FormParse"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Sudeep Mishra",
+                    "email": "sudeep0599@gmail.com"
+                }
+            ],
+            "description": "An easy form parser and management tool for Laravel",
+            "support": {
+                "issues": "https://github.com/sudeepmeesra/FormParse/issues",
+                "source": "https://github.com/sudeepmeesra/FormParse/tree/master"
+            },
+            "time": "2019-09-25T05:20:42+00:00"
         },
         {
             "name": "swiftmailer/swiftmailer",
@@ -7933,7 +7970,9 @@
     ],
     "aliases": [],
     "minimum-stability": "dev",
-    "stability-flags": [],
+    "stability-flags": {
+        "sudeep/formparse": 20
+    },
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {
