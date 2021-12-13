@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ProgressController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -24,5 +25,8 @@ Route::get('/add-question', function () {
 Route::get('/my-progress', function () {
     return view('progress');
 })->middleware(['auth'])->name('progress');
+
+
+Route::get('/user',[ProgressController::class, 'getMe']);
 
 require __DIR__.'/auth.php';

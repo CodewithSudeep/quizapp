@@ -39,7 +39,7 @@ $(document).ready(() => {
 
                     $.ajax({
                         method: "GET",
-                        url:  '/your/url/to/post',
+                        url:  '/user',
 
                     }).done(function( res ) {
                         if(res == "ok"){
