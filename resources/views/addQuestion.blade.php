@@ -3,14 +3,20 @@
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 bg-white border-b border-gray-200">
-                    <form id="questionBank">
-                        <div class="p-2 bg-gray" id="questionHeader" >
-                            <h3>1. Question Here</h3>
-                            <input type="hidden" name="question_id" value="2">
+                    <form id="questionAdd">
+                        <div class="p-2 bg-gray" >
+                                    <h3 class="text-lg leading-6 font-medium text-gray-900">
+                                        Add Question
+                                    </h3>
+                                    <label>Enter Question</label>
+                            <input type="text" class="rounded-md shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 block mt-1 w-full" name="question" value="" onchange="setQuestion(event)">
                         </div>
                         <div id="optionHeader">
                         <div class="p-2">
-                          <input type="radio" name="question1" value="1" onchange="setAnswer(event)"> Answer <br>
+                            <label>Enter four options seprated by comma</label>
+                          <input type="text" class="rounded-md shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 block mt-1 w-full" name="options" value="" onchange="setOptions(event)"> <br>
+                          <label>Enter correct option</label>
+                          <input type="text" class="rounded-md shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 block mt-1 w-full" name="correct" value="" onchange="setCorrectOption(event)"> <br>
                         </div>
                         </div>
                           <div class="p-4 bg-white ">
@@ -29,26 +35,26 @@
     <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
     <script>
 
-let answer;
-const setAnswer = (e) =>{
-    answer = e.target.value;
+let question, options, correct;
+const setQuestion = (e) =>{
+    question = e.target.value;
+}
+const setOptions = (e) =>{
+    options = e.target.value;
+}
+const setCorrectOption = (e) =>{
+    correct = e.target.value;
 }
 
-const makeQuestion = (data) =>{
-    const { question, options, question_id } = data;
-    const question_html = `<h3>${question}</h3>
-                            <input type="hidden" name="question_id" value="${question_id}">`;
-    const options_html = options.map(option => `<div class="p-2"><input type="radio" name="question1" value="${option.id}" onchange="setAnswer(event)"> ${option.option} <br></div>`).join('');
-    $("#questionHeader").html(question_html);
-    $("#optionHeader").html(options_html);
-}
 
-$("#questionBank").on('submit', (e) => {
+$("#questionAdd").on('submit', (e) => {
                     e.preventDefault();
                     const data = {
-                        questionId: $("#question_id").value,
-                        answer: answer
+                       question:question,
+                       options:options,
+                       correct: correct
                     }
+                    console.log(data);
                     $.ajax({
                         method: "POST",
                         url:  '/your/url/to/post',

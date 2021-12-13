@@ -17,4 +17,12 @@ Route::get('/', function () {
     return view('dashboard');
 })->middleware(['auth'])->name('dashboard');
 
+Route::get('/add-question', function () {
+    return view('addQuestion');
+})->middleware(['auth'])->name('addQuestion');
+
+Route::get('/my-progress', function () {
+    return view('progress');
+})->middleware(['auth'])->name('progress');
+
 require __DIR__.'/auth.php';
