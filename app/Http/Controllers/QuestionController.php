@@ -18,5 +18,6 @@ class QuestionController extends Controller
             'question' => $question,
             'correct' => $correct,
         ]);
+        $question->options()->createMany($options);
     }
 }
