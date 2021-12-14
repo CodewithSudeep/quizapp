@@ -32150,6 +32150,17 @@ label{
   right: 33px;
 }
 
+.timer h3{
+  color: white;
+  background: #1f2937;
+  padding: 11px;
+}
+
+.timer{
+  display: flex;
+  justify-content: flex-end;
+}
+
 @-webkit-keyframes ldio-xewc9m53fj-1 {
   0% { top: 68.556px; height: 59.888000000000005px
   }

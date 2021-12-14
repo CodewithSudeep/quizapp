@@ -70,6 +70,12 @@
             <x-responsive-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                 {{ __('Dashboard') }}
             </x-responsive-nav-link>
+            <x-responsive-nav-link :href="route('addQuestion')" :active="request()->routeIs('addQuestion')">
+                {{ __('Add Question') }}
+            </x-responsive-nav-link>
+            <x-responsive-nav-link :href="route('progress')" :active="request()->routeIs('progress')">
+                {{ __('My Progress') }}
+            </x-responsive-nav-link>
         </div>
 
         <!-- Responsive Settings Options -->

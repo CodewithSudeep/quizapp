@@ -22,7 +22,7 @@ class QuestionController extends Controller
             'added_by' => auth()->user()->id,
         ]);
         if(!empty($option)){
-            foreach ($option as $key => $value) {
+        foreach ($option as $key => $value) {
                 $question->options()->create([
                     'option_name' => $value
                 ]);
